@@ -110,6 +110,7 @@ tl;dr
     - On MacOS, the binaries are probably located in `/usr/lib` or `/opt/homebrew/Cellar/`. You can manually search those directories for a specific binary (e.g., `sqlite3`) or, if `pkg-config` is installed, use `system('pkg-config --variable=libdir sqlite3')`. (You can install `pkg-config` via homebrew with `brew install pkg-config`.)
 - The path in the toml file *must* have a folder named `lib` inside it and the binary should be inside that lib folder. (e.g. if your so file is `/usr/local/lib/XXX.so` you need to just put `/usr/local` in the toml file, not `/usr/local/lib`.) If your binary is in a folder not named lib, you can create a symlink named lib somewhere else and then put the path of that symlink in the toml file. This is what I've done in `gdal_overrides.R` in this repo. For another example `Overrides.toml` file for a different project, see this [issue](https://github.com/edwardlavender/patter/issues/55#issuecomment-3922102927). 
 - the `Overrides.toml` file goes in `~/.julia/artifacts`
+- For a complete worked example for another project, see [here](https://github.com/edwardlavender/patter/issues/55#issuecomment-3922102927)
 
 > [!NOTE]
 > If you are looking to implement this, you should know that Julia JLL versions often do not correspond exactly to the upstream library version.
