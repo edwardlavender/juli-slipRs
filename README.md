@@ -104,7 +104,7 @@ Got a better solution! Had a lovely slack conversation with @asinghvi17 who sugg
 
 tl;dr
 - not sure the best way to pre-emptively figure out what overrides you need, but you can trial and error add the ones that show up as "can't find XXX" in the error messages
-- the uuid comes from XXX_jl package where XX is the binary that needs to get overridden. This is the uuid of that _jl package itself
+- the uuid comes from XXX_jl package where XX is the binary that needs to get overridden. This is the uuid of that _jl package itself. For example, for gdal, we override [GDAL_jll](https://github.com/JuliaBinaryWrappers/GDAL_jll.jl), specifying the uuid given at the top of the [Project.toml](https://github.com/JuliaBinaryWrappers/GDAL_jll.jl/blob/main/Project.toml) file.
 - the path is where where the binary (`.so` file) that you want julia to use is located: 
     - On Linux, this will probably be one of the directories in your `LD_LIBRARY` path (run `Sys.getenv('LD_LIBRARY_PATH')`). If you know the exact name of the binary you're looking for (e.g. libxml2.so), you can run gcc to find the path like: `system('gcc --print-file-name=libxml2.so')`.
     - On MacOS, the binaries are probably located in `/usr/lib` or `/opt/homebrew/Cellar/`. You can manually search those directories for a specific binary (e.g., `sqlite3`) or, if `pkg-config` is installed, use `system('pkg-config --variable=libdir sqlite3')`. (You can install `pkg-config` via homebrew with `brew install pkg-config`.)
