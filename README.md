@@ -90,6 +90,7 @@ Also...unloading the R library that was loaded first does not solve the problem 
 Turns out I'm not the only one to have come down this brick road:
 - [Similar Problem with terra and GeoArrays](https://stackoverflow.com/questions/78865514/)
 - [Similar Problem with ResistanceGA and Circuitscape](https://discourse.julialang.org/t/julia-can-not-find-libtiff-r-4-4-0-julia-1-9-3-when-running-resistancega-in-r/124291)
+- [Similar Problem with patter and Patter.jl](https://github.com/edwardlavender/patter/issues/55#issuecomment-3922102927)
 
 After spending many hours (mostly fruitlessly) trying to understand how library linking works and how it interacts with R and Julia, I looked down at my console and saw both libraries working! It didn't quite make sense because all I did in that session was basicall load the two incompatible libraries over and over in different orders. Somehow that worked. I distilled the reproduceable workaround down as much as I good, which is what you'll find in `magic.R`. Basically, load the rgdal c(pp?) library, then make three attempts to load `Circuitscape`. Magically the 3rd one works and you can use it alongside R spatial packages like `sf` and `terra` to your hearts content.
 
