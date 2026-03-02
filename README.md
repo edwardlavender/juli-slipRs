@@ -26,9 +26,9 @@ Next steps
 
 See [run_all.sh](.run_all.sh).
 
-- `julia_first.R` demostrates that after loading `Circuitscape`, using `terra` fails
-- `terra_first.R` demostrates that after loading `terra`, loading `Circuitscape` fails
-- `magic.R` demostrates that if you first load one of the .so files loaded by `terra` and then attempt to load `Circuitscape` three times, the 3rd attempt succeeds and both packages work fine after that.
+- `julia_first.R` demonstrates that after loading `Circuitscape`, using `terra` fails
+- `terra_first.R` demonstrates that after loading `terra`, loading `Circuitscape` fails
+- `magic.R` demonstrates that if you first load one of the .so files loaded by `terra` and then attempt to load `Circuitscape` three times, the 3rd attempt succeeds and both packages work fine after that.
 - `gdal_overrides.R` Actually fixes the issue (for a particular combo of R-package, julia package, OS) by telling Julia to use gdal and xml2 binaries that c is already using. 
 
 
@@ -38,7 +38,7 @@ An attempt to use [Circuitscape.jl](https://github.com/Circuitscape/Circuitscape
 
 "You Should be able to call Circuitscape from R by using the JuliaCall R package." States the documentation. Makes sense to me!
 
-Indeed it does... Once I've worked around [this issue](https://github.com/JuliaInterop/JuliaCall/issues/238) (doesn't impact the dockerfile), the following works splendedly:
+Indeed it does... Once I've worked around [this issue](https://github.com/JuliaInterop/JuliaCall/issues/238) (doesn't impact the dockerfile), the following works splendidly:
 ```{r}
 # Set everything up
 JuliaCall::julia_setup()
@@ -92,7 +92,7 @@ Turns out I'm not the only one to have come down this brick road:
 - [Similar Problem with ResistanceGA and Circuitscape](https://discourse.julialang.org/t/julia-can-not-find-libtiff-r-4-4-0-julia-1-9-3-when-running-resistancega-in-r/124291)
 - [Similar Problem with patter and Patter.jl](https://github.com/edwardlavender/patter/issues/55#issuecomment-3922102927)
 
-After spending many hours (mostly fruitlessly) trying to understand how library linking works and how it interacts with R and Julia, I looked down at my console and saw both libraries working! It didn't quite make sense because all I did in that session was basicall load the two incompatible libraries over and over in different orders. Somehow that worked. I distilled the reproduceable workaround down as much as I good, which is what you'll find in `magic.R`. Basically, load the rgdal c(pp?) library, then make three attempts to load `Circuitscape`. Magically the 3rd one works and you can use it alongside R spatial packages like `sf` and `terra` to your hearts content.
+After spending many hours (mostly fruitlessly) trying to understand how library linking works and how it interacts with R and Julia, I looked down at my console and saw both libraries working! It didn't quite make sense because all I did in that session was basically load the two incompatible libraries over and over in different orders. Somehow that worked. I distilled the reproducible workaround down as much as I good, which is what you'll find in `magic.R`. Basically, load the rgdal c(pp?) library, then make three attempts to load `Circuitscape`. Magically the 3rd one works and you can use it alongside R spatial packages like `sf` and `terra` to your hearts content.
 
 But whyyyy?? What exactly is the library that both need and what versions do each need? Or is it just some kind LD_PATH related problem? Why does this magical combination work? Is there any way to make it work on the first try?
 
